@@ -1,0 +1,18 @@
+{
+  "dependencies": {
+    "@types/node": "^12.12.7",
+    "airtable": "^0.7.2",
+    "dotenv": "^8.2.0",
+    "node-fetch": "^2.6.0"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start:dev": "ts-node src/index.ts"
+  },
+  "devDependencies": {
+    "@types/airtable": "^0.5.6",
+    "@types/node-fetch": "^2.5.3",
+    "ts-node": "^8.4.1",
+    "typescript": "^3.7.2"
+  }
+}
