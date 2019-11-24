@@ -10,12 +10,13 @@ export const onMessage = async (msg: Buffer, rinfo: RemoteInfo) => {
   debug(`server got: ${msg} from ${rinfo.address}:${rinfo.port}`);
   try {
     const status: WasherStatus = await fetchWasherStatus(rinfo.address);
-    displayWaterTemperature(status);
-    triggerIftttWebhookAfterEndLaundry(status);
-    const row = await logCurrentStatus(status);
-    // @ts-ignore
-    debug('Appliance status saved', row.id);
+    const jobs = await Promise.all([
+      displayWaterTemperature(status),
+      triggerIftttWebhookAfterEndLaundry(status),
+      logCurrentStatus(status),
+    ]);
+    debug('Washer status was processed by %s jobs', jobs.length);
   } catch (err) {
-    console.error(`ERROR during retrieving status. ${err.message}`);
+    debug(`ERROR during processing washer status. ${err.message}`);
   }
 };
