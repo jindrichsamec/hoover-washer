@@ -1,4 +1,5 @@
 import { Socket } from 'dgram';
+import { debug } from '../debug';
 
 export const createOnListeningHandler = (server: Socket) => () => {
   const address = server.address();
@@ -6,5 +7,5 @@ export const createOnListeningHandler = (server: Socket) => () => {
     typeof address === 'string'
       ? address
       : `${address.address}:${address.port}`;
-  console.log(`server listening ${listeningAddress}`);
+  debug(`server listening ${listeningAddress}`);
 };

@@ -1,3 +1,4 @@
+import { debug } from '../debug';
 import { setTemperature } from './thermometer';
 import { WasherStatus } from '../washer/WasherStatus';
 import {
@@ -8,10 +9,10 @@ import {
 export function displayWaterTemperature(status: WasherStatus): void {
   const cycleState: number = Number(status.MachMd);
   if (hasCycleBeenExecuted(cycleState)) {
-    console.log('Switch was turned on');
+    debug('Switch was turned on');
     setTemperature(Number(status.Temp));
   } else if (hasCycleBeenEnded(cycleState)) {
-    console.log('Switch was turned off');
+    debug('Switch was turned off');
     setTemperature(-100);
   }
 }
