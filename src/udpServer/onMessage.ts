@@ -7,7 +7,9 @@ import { displayWaterTemperature } from '../homebridge/waterTemperature';
 import { triggerIftttWebhookAfterEndLaundry } from '../ifttt/webhook';
 
 export const onMessage = async (msg: Buffer, rinfo: RemoteInfo) => {
-  debug(`server got: ${msg} from ${rinfo.address}:${rinfo.port}`);
+  debug.extend('onMessage')(
+    `server got: ${msg} from ${rinfo.address}:${rinfo.port}`,
+  );
   try {
     const status: WasherStatus = await fetchWasherStatus(rinfo.address);
     const jobs = await Promise.all([
@@ -15,8 +17,13 @@ export const onMessage = async (msg: Buffer, rinfo: RemoteInfo) => {
       triggerIftttWebhookAfterEndLaundry(status),
       logCurrentStatus(status),
     ]);
-    debug('Washer status was processed by %s jobs', jobs.length);
+    debug.extend('onMessage')(
+      'Washer status was processed by %s jobs',
+      jobs.length,
+    );
   } catch (err) {
-    debug(`ERROR during processing washer status. ${err.message}`);
+    debug.extend('onMessage')(
+      `ERROR during processing washer status. ${err.message}`,
+    );
   }
 };

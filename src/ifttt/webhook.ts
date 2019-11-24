@@ -10,7 +10,7 @@ export const triggerIftttWebhookAfterEndLaundry = async (
 ): Promise<void> => {
   const cycleSate: LaundryCycleState = Number(status.MachMd);
   if (hasCycleBeenEnded(cycleSate)) {
-    debug('triggering ifttt webhook service');
+    debug.extend('ifttt')('triggering ifttt webhook service');
     await triggerIftttWebhook('laundry_done');
   }
 };

@@ -9,10 +9,10 @@ import {
 export function displayWaterTemperature(status: WasherStatus): void {
   const cycleState: number = Number(status.MachMd);
   if (hasCycleBeenExecuted(cycleState)) {
-    debug('Switch was turned on');
+    debug.extend('homebridge')('Switch was turned on');
     setTemperature(Number(status.Temp));
   } else if (hasCycleBeenEnded(cycleState)) {
-    debug('Switch was turned off');
+    debug.extend('homebridge')('Switch was turned off');
     setTemperature(-100);
   }
 }
