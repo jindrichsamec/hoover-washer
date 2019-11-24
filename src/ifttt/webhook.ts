@@ -1,18 +1,16 @@
 import fetch, { Response } from 'node-fetch';
 import { WasherStatus } from '../washer/WasherStatus';
 import config from '../config';
-
-let lastWasherStatus = 0;
-const WASH_ENDED_STATUS = 7;
+import { hasCycleBeenEnded } from '../washer/cycleStateRecognizer';
+import { LaundryCycleState } from '../washer/LaundryCycleState';
 
 export const triggerIftttWebhookAfterEndLaundry = async (
   status: WasherStatus,
-): Promise<Response | void> => {
-  const washerStatus: number = Number(status.MachMd);
-  if (washerStatus !== lastWasherStatus && washerStatus === WASH_ENDED_STATUS) {
+): Promise<void> => {
+  const cycleSate: LaundryCycleState = Number(status.MachMd);
+  if (hasCycleBeenEnded(cycleSate)) {
     await triggerIftttWebhook('laundry_done');
   }
-  lastWasherStatus = washerStatus;
 };
 
 const triggerIftttWebhook = async (

@@ -1,21 +1,17 @@
 import { setTemperature } from './thermometer';
 import { WasherStatus } from '../washer/WasherStatus';
-
-let lastWasherStatus = 0;
-const WASH_ENDED_STATUS = 7;
-const WASHER_EXECUTION_STATUS = 2;
+import {
+  hasCycleBeenExecuted,
+  hasCycleBeenEnded,
+} from '../washer/cycleStateRecognizer';
 
 export function displayWaterTemperature(status: WasherStatus): void {
-  const washerStatus: number = Number(status.MachMd);
-  if (washerStatus !== lastWasherStatus) {
-    if (washerStatus === WASH_ENDED_STATUS) {
-      setTemperature(-100);
-      console.log('Switch was turned off');
-    }
-    if (washerStatus === WASHER_EXECUTION_STATUS) {
-      setTemperature(Number(status.Temp));
-      console.log('Switch was turned on');
-    }
-    lastWasherStatus = washerStatus;
+  const cycleState: number = Number(status.MachMd);
+  if (hasCycleBeenExecuted(cycleState)) {
+    console.log('Switch was turned on');
+    setTemperature(Number(status.Temp));
+  } else if (hasCycleBeenEnded(cycleState)) {
+    console.log('Switch was turned off');
+    setTemperature(-100);
   }
 }
