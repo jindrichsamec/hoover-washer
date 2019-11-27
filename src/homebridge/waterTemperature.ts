@@ -5,14 +5,18 @@ import {
   hasCycleBeenExecuted,
   hasCycleBeenEnded,
 } from '../washer/cycleStateRecognizer';
+import { LaundryCycleState } from '../washer/LaundryCycleState';
+
+let lastLaundryCycleState = LaundryCycleState.OFF;
 
 export function displayWaterTemperature(status: WasherStatus): void {
   const cycleState: number = Number(status.MachMd);
-  if (hasCycleBeenExecuted(cycleState)) {
+  if (hasCycleBeenExecuted(cycleState, lastLaundryCycleState)) {
     debug.extend('homebridge')('Switch was turned on');
     setTemperature(Number(status.Temp));
-  } else if (hasCycleBeenEnded(cycleState)) {
+  } else if (hasCycleBeenEnded(cycleState, lastLaundryCycleState)) {
     debug.extend('homebridge')('Switch was turned off');
     setTemperature(-100);
   }
+  lastLaundryCycleState = cycleState;
 }

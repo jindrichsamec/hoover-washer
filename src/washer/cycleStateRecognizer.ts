@@ -1,19 +1,31 @@
 import { LaundryCycleState } from './LaundryCycleState';
 
-let lastLaundryCycleState = LaundryCycleState.OFF;
-
-export const hasCycleBeenEnded = (state: LaundryCycleState): boolean => {
-  return hasCycleBeenChanged(state) && state === LaundryCycleState.ENDED;
-};
-
-export const hasCycleBeenExecuted = (state: LaundryCycleState): boolean => {
-  return hasCycleBeenChanged(state) && state === LaundryCycleState.EXECUTION;
-};
-
-export const hasCycleBeenChanged = (
-  currentLaundryCycleState: LaundryCycleState,
+export const hasCycleBeenEnded = (
+  currentState: LaundryCycleState,
+  prevState: LaundryCycleState,
 ): boolean => {
-  const prevLaundryCycleState = lastLaundryCycleState;
-  lastLaundryCycleState = currentLaundryCycleState;
-  return prevLaundryCycleState !== currentLaundryCycleState;
+  return hasCycleBeenChangedTo(
+    currentState,
+    prevState,
+    LaundryCycleState.ENDED,
+  );
+};
+
+export const hasCycleBeenExecuted = (
+  currentState: LaundryCycleState,
+  prevState: LaundryCycleState,
+): boolean => {
+  return hasCycleBeenChangedTo(
+    currentState,
+    prevState,
+    LaundryCycleState.EXECUTION,
+  );
+};
+
+export const hasCycleBeenChangedTo = (
+  currentState: LaundryCycleState,
+  prevState: LaundryCycleState,
+  requiredState: LaundryCycleState,
+): boolean => {
+  return currentState !== prevState && currentState === requiredState;
 };

@@ -5,14 +5,17 @@ import config from '../config';
 import { hasCycleBeenEnded } from '../washer/cycleStateRecognizer';
 import { LaundryCycleState } from '../washer/LaundryCycleState';
 
+let lastLaundryCycleState = LaundryCycleState.OFF;
+
 export const triggerIftttWebhookAfterEndLaundry = async (
   status: WasherStatus,
 ): Promise<void> => {
   const cycleSate: LaundryCycleState = Number(status.MachMd);
-  if (hasCycleBeenEnded(cycleSate)) {
+  if (hasCycleBeenEnded(cycleSate, lastLaundryCycleState)) {
     debug.extend('ifttt')('triggering ifttt webhook service');
     await triggerIftttWebhook('laundry_done');
   }
+  lastLaundryCycleState = cycleSate;
 };
 
 const triggerIftttWebhook = async (
