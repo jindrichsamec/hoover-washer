@@ -14,4 +14,8 @@ export default {
   airtableTableName: getEnv('AIRTABLE_TABLE_NAME'),
   airtableApiKey: getEnv('AIRTABLE_API_KEY'),
   iftttApiKey: getEnv('IFTTT_API_KEY'),
+  googleSheetsSpreadsheetId: getEnv('GOOGLE_SHEETS_SPREADSHEET_ID'),
+  googleSheetsClientId: getEnv('GOOGLE_SHEETS_CLIENT_ID'),
+  googleSheetsClientSecret: getEnv('GOOGLE_SHEETS_CLIENT_SECRET'),
+  googleSheetsProjectId: getEnv('GOOGLE_SHEETS_PROJECT_ID'),
 };

@@ -4,7 +4,8 @@
     "airtable": "^0.7.2",
     "debug": "^4.1.1",
     "dotenv": "^8.2.0",
-    "node-fetch": "^2.6.0"
+    "node-fetch": "^2.6.0",
+    "sheets-api": "^1.0.8"
   },
   "scripts": {
     "build": "tsc",

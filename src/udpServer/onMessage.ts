@@ -2,7 +2,7 @@ import { RemoteInfo } from 'dgram';
 import { debug } from '../debug';
 import { fetchWasherStatus } from '../washer/fetchStatus';
 import { WasherStatus } from '../washer/WasherStatus';
-import { logCurrentStatus } from '../statusLogger/airtable';
+import { logCurrentStatus } from '../statusLogger/googleSpreadsheet';
 import { displayWaterTemperature } from '../homebridge/waterTemperature';
 import { triggerIftttWebhookAfterEndLaundry } from '../ifttt/webhook';
 
