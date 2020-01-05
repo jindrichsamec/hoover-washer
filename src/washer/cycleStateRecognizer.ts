@@ -7,7 +7,7 @@ export const hasCycleBeenEnded = (
   return hasCycleBeenChangedTo(
     currentState,
     prevState,
-    LaundryCycleState.ENDED,
+    LaundryCycleState.PROGRAM_ENDED,
   );
 };
 
@@ -18,7 +18,7 @@ export const hasCycleBeenExecuted = (
   return hasCycleBeenChangedTo(
     currentState,
     prevState,
-    LaundryCycleState.EXECUTION,
+    LaundryCycleState.PROGRAM_EXECUTION,
   );
 };
 

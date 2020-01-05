@@ -1,11 +1,12 @@
 export enum LaundryCycleState {
   OFF = 0,
-  SELECTION = 1,
-  EXECUTION = 2,
-  PAUSE = 3,
-  DELAY_START = 4,
+  PROGRAM_SELECTION = 1,
+  PROGRAM_EXECUTION = 2,
+  PROGRAM_PAUSE = 3,
+  DELAYED_START_SELECTION = 4,
+  DELAYED_START_EXECUTED = 5,
   ERROR = 6,
-  ENDED = 7,
+  PROGRAM_ENDED = 7,
 }
 export const laundryCycleStateKeys: Array<string> = Object.keys(
   LaundryCycleState,

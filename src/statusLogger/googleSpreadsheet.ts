@@ -5,21 +5,18 @@ import { WasherStatus } from '../washer/WasherStatus';
 
 const sheets = new SheetsAPI();
 
-export const logCurrentStatus = async (status: WasherStatus) => {
+export const logCurrentStatus = async (
+  status: WasherStatus,
+): Promise<Object> => {
   debug.extend('google:sheets')(
     'Log current status to Google spreadsheet > %s',
-    config.googleSheetsClientId,
+    config.googleSheetsSpreadsheetId,
   );
-
-  const payload = {
-    spreadsheetId: config.googleSheetsSpreadsheetId,
-    range: 'A1',
-    valueInputOption: 'USER_ENTERED',
-    resource: {
-      majorDimension: 'ROWS',
-      values: [[...Object.values(status), new Date()]],
-    },
+  const rowToSave = {
+    created: new Date().toLocaleString(),
+    ...status,
   };
+
   const client = await sheets._authorize({
     installed: {
       client_id: config.googleSheetsClientId,
@@ -31,5 +28,36 @@ export const logCurrentStatus = async (status: WasherStatus) => {
       redirect_uris: ['urn:ietf:wg:oauth:2.0:oob', 'http://localhost'],
     },
   });
-  return sheets.values('append', client, payload);
+
+  const data = await sheets.values('get', client, {
+    spreadsheetId: config.googleSheetsSpreadsheetId,
+    range: 'A1',
+  });
+
+  if (data.response.values === undefined) {
+    debug.extend('google:sheets')('Initializing empty sheet');
+    await sheets.values(
+      'append',
+      client,
+      createRowPayload(Object.keys(rowToSave)),
+    );
+  }
+
+  return sheets.values(
+    'append',
+    client,
+    createRowPayload(Object.values(rowToSave)),
+  );
 };
+
+function createRowPayload(rowToSave: Array<string | number | boolean>): Object {
+  return {
+    spreadsheetId: config.googleSheetsSpreadsheetId,
+    range: 'A1',
+    valueInputOption: 'USER_ENTERED',
+    resource: {
+      majorDimension: 'ROWS',
+      values: [rowToSave],
+    },
+  };
+}
