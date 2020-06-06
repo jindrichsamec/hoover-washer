@@ -18,4 +18,5 @@ export default {
   googleSheetsClientId: getEnv('GOOGLE_SHEETS_CLIENT_ID'),
   googleSheetsClientSecret: getEnv('GOOGLE_SHEETS_CLIENT_SECRET'),
   googleSheetsProjectId: getEnv('GOOGLE_SHEETS_PROJECT_ID'),
+  homebridgeHost: getEnv('HOMEBRIDGE_HOST'),
 };
