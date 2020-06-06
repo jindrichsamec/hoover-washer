@@ -1,4 +1,19 @@
 {
+  "version": "1.0.0",
+  "name": "hoover-washer-status-check",
+  "homepage": "https://github.com/jindrichsamec/hoover-washer-status-check#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jindrichsamec/hoover-washer-status-check"
+  },
+  "bugs": "https://github.com/jindrichsamec/hoover-washer-status-check/issues",
+  "keywords": [
+    "hoover",
+    "washer"
+  ],
+  "main": "dist/index.js",
+  "license": "SEE LICENSE IN ./LICENSE",
+  "author": "Jindrich Samec<jindrich.samec@xjs.cz> (https://xjs.cz/)",
   "dependencies": {
     "airtable": "^0.7.2",
     "debug": "^4.1.1",
@@ -9,6 +24,8 @@
   },
   "scripts": {
     "build": "tsc",
+    "clear": "rm -rf dist/*",
+    "test": "echo \"no tests :(\"",
     "start:dev": "ts-node src/index.ts"
   },
   "devDependencies": {
