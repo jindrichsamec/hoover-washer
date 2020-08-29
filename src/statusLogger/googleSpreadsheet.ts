@@ -2,12 +2,13 @@ import SheetsAPI from 'sheets-api';
 import config from '../config';
 import { debug } from '../debug';
 import { WasherStatus } from '../washer/WasherStatus';
+import { StatusLogger } from './StatusLogger';
 
 const sheets = new SheetsAPI();
 
-export const logCurrentStatus = async (
+export const logCurrentStatus: StatusLogger = async (
   status: WasherStatus,
-): Promise<Object> => {
+): Promise<void> => {
   debug.extend('google:sheets')(
     'Log current status to Google spreadsheet > %s',
     config.googleSheetsSpreadsheetId,
@@ -43,7 +44,7 @@ export const logCurrentStatus = async (
     );
   }
 
-  return sheets.values(
+  sheets.values(
     'append',
     client,
     createRowPayload(Object.values(rowToSave)),
