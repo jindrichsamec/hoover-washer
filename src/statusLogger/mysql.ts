@@ -39,6 +39,9 @@ export const logCurrentStatus: StatusLogger = async (
     },
   );
   columnDefinitions.push('id int primary key auto_increment');
+  columnDefinitions.push(
+    'createdAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP',
+  );
   const sql = `CREATE TABLE IF NOT EXISTS hoover_status (${columnDefinitions.join(
     ', ',
   )})`;
