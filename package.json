@@ -22,7 +22,7 @@
     "debug": "^4.1.1",
     "dotenv": "^8.2.0",
     "mysql": "^2.18.1",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.1",
     "sheets-api": "^1.0.8",
     "yup": "^0.28.0"
   },
